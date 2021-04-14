@@ -12,4 +12,4 @@ git clone https://github.com/ITdesk01/jd_openwrt_script.git package/jd_openwrt_s
 git clone https://github.com/garypang13/luci-app-bypass package/luci-app-bypass
 git clone https://github.com/garypang13/smartdns-le package/smartdns-le
 git clone https://github.com/garypang13/luci-app-dnsfilter package/luci-app-dnsfilter
-git clone https://github.com/xiaorouji/openwrt-passwal  package/passwall
+git clone https://github.com/xiaorouji/openwrt-passwall  package/passwall
