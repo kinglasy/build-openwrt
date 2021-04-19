@@ -230,9 +230,16 @@ jobs:
     - name: 整理固件文件夹
       id: organizer
       run: |
-        mkdir config
-        find openwrt/bin/targets/ -name "*config.buildinfo*" | xargs -i mv -f {} config        
-        cd openwrt/bin/targets/*/*
+        cd openwrt
+        if [[ "${REGULAR_UPDATE}" == "true" ]]; then
+          source "${PATH1}/upgrade.sh" && Diy_Part3
+        fi
+        mkdir bin/config
+        find bin/targets/ -name "*config.buildinfo*" | xargs -i mv -f {} bin/config
+        if [ -n "$(ls -A "bin/targets/x86" 2>/dev/null)" ]; then
+          find bin/targets/x86/* -name "*kernel*" | xargs -i mv -f {} bin/targets
+        fi
+        cd bin/targets/*/*
         rm -rf packages && mkdir packages
         # find -name "*buildinfo*" | xargs -i mv -f {} packages
         # find -name "*sha256sums*" | xargs -i mv -f {} packages
