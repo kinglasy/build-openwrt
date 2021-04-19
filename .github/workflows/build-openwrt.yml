@@ -43,7 +43,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [Lede_x86_64,p2w_r619ac_128m]
+        target: [Lede_x86_64]
 
      # [Lede_x86_64,Lede_gl_mt300n_v2,Lede_nanopi_r2s,Lede_nanopi_r4s,Lede_newifi_d2,p2w_r619ac_128m,Lede_phicomm_k2p,Lede_phicomm_n1,Lede_redmi_ac2100,Lede_wankeyun,Lede_wndr3800,Lede_wndr4300_v1,Lede_wr703n_v1,Lede_xiaomi_r3pro,Lede_xiaoyu_c5,Lede_Raspberry_Pi4]
      
@@ -227,19 +227,12 @@ jobs:
            mv -f reform/out/*/*.img.gz openwrt/bin/targets/armvirt/*
         fi
     
-    name: 整理固件文件夹
+    - name: 整理固件文件夹
       id: organizer
       run: |
-        cd openwrt
-        if [[ "${REGULAR_UPDATE}" == "true" ]]; then
-          source "${PATH1}/upgrade.sh" && Diy_Part3
-        fi
-        mkdir bin/config
-        find bin/targets/ -name "*config.buildinfo*" | xargs -i mv -f {} bin/config
-        if [ -n "$(ls -A "bin/targets/x86" 2>/dev/null)" ]; then
-          find bin/targets/x86/* -name "*kernel*" | xargs -i mv -f {} bin/targets
-        fi
-        cd bin/targets/*/*
+        mkdir config
+        find openwrt/bin/targets/ -name "*config.buildinfo*" | xargs -i mv -f {} config        
+        cd openwrt/bin/targets/*/*
         rm -rf packages && mkdir packages
         # find -name "*buildinfo*" | xargs -i mv -f {} packages
         # find -name "*sha256sums*" | xargs -i mv -f {} packages
